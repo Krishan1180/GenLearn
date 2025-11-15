@@ -1,0 +1,242 @@
+import React, { useState } from 'react';
+import { Book, BarChart, Users, ClipboardCheck, Brain, Target, Activity, HelpCircle, User, LogOut, LayoutDashboard } from 'lucide-react';
+
+// Per your tech stack, we'll use lucide-react for icons.
+// In a full app, you'd install: npm install lucide-react
+
+// --- Utility Components ---
+
+// A re-usable card component for dashboard items
+const DashboardCard = ({ title, description, icon, actionText }) => (
+  <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300">
+    <div className="flex items-center space-x-4">
+      <div className="flex-shrink-0 bg-indigo-500 rounded-full p-3 text-white">
+        {icon}
+      </div>
+      <div>
+        <h3 className="text-lg font-semibold text-gray-900">{title}</h3>
+        <p className="text-sm text-gray-600">{description}</p>
+      </div>
+    </div>
+    <div className="mt-6">
+      <button className="w-full text-sm font-medium text-white bg-indigo-600 rounded-md px-4 py-2 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+        {actionText}
+      </button>
+    </div>
+  </div>
+);
+
+// A re-usable header
+const AppHeader = ({ user, onLogout }) => (
+  <header className="bg-white shadow-sm sticky top-0 z-50">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="flex justify-between items-center h-16">
+        <div className="flex items-center">
+          <Brain className="h-8 w-8 text-indigo-600" />
+          <span className="ml-3 text-xl font-bold text-gray-900">EduAI Platform</span>
+        </div>
+        <div className="flex items-center space-x-4">
+          <span className="text-sm font-medium text-gray-700">
+            Welcome, {user.name} ({user.role})
+          </span>
+          <button
+            onClick={onLogout}
+            className="p-1 rounded-full text-gray-500 hover:text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          >
+            <LogOut className="h-6 w-6" />
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+);
+
+// --- Main App Views ---
+
+// This maps to the "Teacher Dashboard" in your MVP plan
+const TeacherDashboard = () => (
+  <div className="p-6 md:p-10">
+    <h1 className="text-3xl font-bold text-gray-900 mb-6">Teacher Dashboard</h1>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <DashboardCard
+        title="Content & Curriculum"
+        description="Upload documents, create lessons, and manage course structure."
+        icon={<Book className="h-6 w-6" />}
+        actionText="Manage Content"
+      />
+      <DashboardCard
+        title="Class & Roster"
+        description="Manage your classes, add/remove students, and view rosters."
+        icon={<Users className="h-6 w-6" />}
+        actionText="Manage Classes"
+      />
+      <DashboardCard
+        title="Performance Analytics"
+        description="Monitor student performance, track mastery, and view analytics."
+        icon={<BarChart className="h-6 w-6" />}
+        actionText="View Analytics"
+      />
+      <DashboardCard
+        title="Assignment & Quiz Generation"
+        description="Use AI assistance to create assignments and quizzes from your curriculum."
+        icon={<ClipboardCheck className="h-6 w-6" />}
+        actionText="Create Quiz"
+      />
+      <DashboardCard
+        title="Feedback Review"
+        description="Review AI-generated feedback and approve it for students."
+        icon={<Activity className="h-6 w-6" />}
+        actionText="Review Feedback"
+      />
+    </div>
+  </div>
+);
+
+// This maps to the "Student Application" in your MVP plan
+const StudentApp = () => (
+  <div className="p-6 md:p-10">
+    <h1 className="text-3xl font-bold text-gray-900 mb-6">My Learning Path</h1>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <DashboardCard
+        title="Personalized Learning"
+        description="Continue your adaptive learning journey. Next up: Lesson 3.2."
+        icon={<Brain className="h-6 w-6" />}
+        actionText="Start Lesson"
+      />
+      <DashboardCard
+        title="Interactive Quizzes"
+        description="Take quizzes and get instant feedback on your understanding."
+        icon={<ClipboardCheck className="h-6 w-6" />}
+        actionText="Take a Quiz"
+      />
+      <DashboardCard
+        title="Progress & Mastery"
+        description="Visualize your progress and see which skills you've mastered."
+        icon={<Target className="h-6 w-6" />}
+        actionText="View My Progress"
+      />
+      <DashboardCard
+        title="Lesson Library"
+        description="Review past lessons, including text and multimedia content."
+        icon={<Book className="h-6 w-6" />}
+        actionText="Browse Lessons"
+      />
+      <DashboardCard
+        title="Request Help"
+        description="Stuck on a concept? Request help from your teacher."
+        icon={<HelpCircle className="h-6 w-6" />}
+        actionText="Get Help"
+      />
+    </div>
+  </div>
+);
+
+// A simple login screen to simulate authentication
+const LoginScreen = ({ onLogin }) => {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <div className="max-w-md w-full bg-white p-8 rounded-lg shadow-lg">
+        <div className="flex justify-center mb-6">
+          <Brain className="h-12 w-12 text-indigo-600" />
+        </div>
+        <h2 className="text-2xl font-bold text-center text-gray-900 mb-6">
+          Welcome to EduAI
+        </h2>
+        <p className="text-center text-gray-600 mb-6">
+          This is a prototype. Select a role to log in.
+        </p>
+        <div className="space-y-4">
+          <button
+            onClick={() => onLogin({ name: 'Dr. Anya Sharma', role: 'Teacher' })}
+            className="w-full py-3 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg shadow-md transition duration-300"
+          >
+            Log in as Teacher
+          </button>
+          <button
+            onClick={() => onLogin({ name: 'Alex Johnson', role: 'Student' })}
+            className="w-full py-3 px-4 bg-gray-700 hover:bg-gray-800 text-white font-medium rounded-lg shadow-md transition duration-300"
+          >
+            Log in as Student
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// --- Main Application Component ---
+// This acts as the main entry point and handles routing
+export default function App() {
+  // State for authentication (mocked)
+  const [user, setUser] = useState(null);
+  
+  // State for navigation (simulating React Router)
+  // We don't have a full router, so we'll just swap components
+  const [currentPage, setCurrentPage] = useState('dashboard'); 
+
+  const handleLogout = () => {
+    setUser(null);
+    setCurrentPage('dashboard'); // Reset page on logout
+  };
+
+  // If no user, show login screen
+  if (!user) {
+    return <LoginScreen onLogin={setUser} />;
+  }
+
+  // Determine which dashboard to show based on role
+  const MainContent = () => {
+    if (user.role === 'Teacher') {
+      return <TeacherDashboard />;
+    } else {
+      return <StudentApp />;
+    }
+  };
+
+  // This would be your main layout component
+  return (
+    <div className="min-h-screen bg-gray-100 font-inter">
+      <AppHeader user={user} onLogout={handleLogout} />
+      
+      {/* In a real app, this sidebar would use React Router's <Link> component.
+        For this prototype, it's just for show.
+      */}
+      <div className="flex">
+        <nav className="w-64 bg-white p-4 shadow-md hidden md:block">
+          <h3 className="text-xs text-gray-500 uppercase font-semibold mb-4">Main Menu</h3>
+          <ul className="space-y-2">
+            <li>
+              <a href="#" className="flex items-center p-2 text-base font-medium text-white bg-indigo-600 rounded-lg">
+                <LayoutDashboard className="h-6 w-6" />
+                <span className="ml-3">Dashboard</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" className="flex items-center p-2 text-base font-medium text-gray-700 rounded-lg hover:bg-gray-100">
+                <Users className="h-6 w-6 text-gray-500" />
+                <span className="ml-3">My Classes</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" className="flex items-center p-2 text-base font-medium text-gray-700 rounded-lg hover:bg-gray-100">
+                <Book className="h-6 w-6 text-gray-500" />
+                <span className="ml-3">Content</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" className="flex items-center p-2 text-base font-medium text-gray-700 rounded-lg hover:bg-gray-100">
+                <User className="h-6 w-6 text-gray-500" />
+                <span className="ml-3">Profile</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        {/* Main Content Area */}
+        <main className="flex-1">
+          <MainContent />
+        </main>
+      </div>
+    </div>
+  );
+}
